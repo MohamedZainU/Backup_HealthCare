@@ -17,12 +17,12 @@
           id="time" 
           placeholder="Appointment Time"
           [min]="today">
-        <div *ngIf="itemForm.get('time')?.invalid && !itemForm.get('time')?.hasError('negativeValue')" class="error-message">
-          <span class="text-danger">Please choose a valid appointment time.</span>
-        </div>
-        <div *ngIf="itemForm.get('time')?.hasError('negativeValue')" class="error-message">
-          <span class="text-danger">Patient Already Booked this Appointment Time !</span>
-      </div>
+          <div *ngIf="itemForm.get('time')?.invalid && !itemForm.get('time')?.hasError('negativeValue')" class="error-message">
+            <span class="text-danger">Please choose a valid appointment time.</span>
+          </div>
+          <div *ngIf="itemForm.get('time')?.hasError('negativeValue')" class="error-message">
+            <span class="text-danger">Patient Already Booked this Appointment Time!</span>
+          </div>
     </div>
 
       <div class="text-center">

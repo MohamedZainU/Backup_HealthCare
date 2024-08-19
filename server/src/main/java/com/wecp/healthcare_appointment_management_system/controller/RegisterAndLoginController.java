@@ -7,10 +7,12 @@ import com.wecp.healthcare_appointment_management_system.entity.Patient;
 import com.wecp.healthcare_appointment_management_system.entity.Receptionist;
 import com.wecp.healthcare_appointment_management_system.entity.User;
 import com.wecp.healthcare_appointment_management_system.jwt.JwtUtil;
+import com.wecp.healthcare_appointment_management_system.service.AppointmentService;
 import com.wecp.healthcare_appointment_management_system.service.UserService;
 
 import com.wecp.healthcare_appointment_management_system.service.UserService;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.text.ParseException;
@@ -44,6 +46,9 @@ public class RegisterAndLoginController {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+
+    @Autowired
+    private AppointmentService appointmentService;
 
     private AuthenticationManager authenticationManager;
 
@@ -101,6 +106,24 @@ public ResponseEntity<Boolean> deleteAppointment(@PathVariable Long appointmentI
     }
 }
 
+// @GetMapping("/api/user/appointmentTime/{time}")
+// public ResponseEntity<Boolean> appointmentTimeExists(@PathVariable String time) {
+//     try {
+//         // Define the date format
+//         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+
+//         // Parse the date-time string
+//         Date date = format.parse(time);
+
+//         List<Appointment> appointment = appointmentRepository.findByAppointmentTime(date);
+//         return ResponseEntity.ok(appointment != null && !appointment.isEmpty());
+//     } catch (ParseException e) {
+//         // Handle the exception
+//         e.printStackTrace();
+//         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//     }
+// }
+
 @GetMapping("/api/user/appointmentTime/{time}")
 public ResponseEntity<Boolean> appointmentTimeExists(@PathVariable String time) {
     try {
@@ -108,15 +131,25 @@ public ResponseEntity<Boolean> appointmentTimeExists(@PathVariable String time) 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 
         // Parse the date-time string
-        Date date = format.parse(time);
+        Date startTime = format.parse(time);
 
-        List<Appointment> appointment = appointmentRepository.findByAppointmentTime(date);
-        return ResponseEntity.ok(appointment != null && !appointment.isEmpty());
+        // Add 30 minutes to get the end of the time range
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startTime);
+        calendar.add(Calendar.MINUTE, 30);
+        Date endTime = calendar.getTime();
+
+        // Check if any appointment exists within the 30-minute window
+        List<Appointment> appointments = appointmentRepository.findByAppointmentTimeBetween(startTime, endTime);
+        boolean appointmentExists = appointments != null && !appointments.isEmpty();
+
+        return ResponseEntity.ok(appointmentExists);
     } catch (ParseException e) {
         // Handle the exception
         e.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }
+
 
 }

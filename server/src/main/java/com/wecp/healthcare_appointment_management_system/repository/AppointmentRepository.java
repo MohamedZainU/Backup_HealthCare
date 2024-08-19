@@ -17,5 +17,5 @@ public interface AppointmentRepository  extends JpaRepository<Appointment,Long> 
     @Query("select a from Appointment a where a.doctor.id =:doctorId")
     public List<Appointment> getAppointmentsByDoctorId(Long doctorId);
 
-    public List<Appointment> findByAppointmentTime(Date appointmentTime);
+    List<Appointment> findByAppointmentTimeBetween(Date startTime, Date endTime);
 }
