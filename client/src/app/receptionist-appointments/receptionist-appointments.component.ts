@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../services/http.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { catchError, map, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-receptionist-appointments',
@@ -23,13 +24,31 @@ export class ReceptionistAppointmentsComponent implements OnInit {
   constructor(public httpService: HttpService, private formBuilder: FormBuilder, private datePipe: DatePipe) {
     this.itemForm = this.formBuilder.group({
       id: [this.formModel.id, [Validators.required]],
-      time: [this.formModel.time, [Validators.required]],
+      time: [this.formModel.time, [Validators.required],[this.timeValidator()]],
     });
   }
 
   ngOnInit(): void {
     this.getAppointments();
   }
+
+  timeValidator(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      console.log("Front END: " + control.value);
+      // Convert the datetime-local string to an ISO 8601 string
+      let isoDateTime = control.value + ":00.000Z";
+      return this.httpService.appointmentTimeExists(isoDateTime).pipe(
+        map(isTaken => {
+          if (isTaken) {
+            return { negativeValue: true };
+          } else {
+            return null;
+          }
+        }),
+        catchError(() => of(null))
+      );
+    };
+  }  
 
   getAppointments() {
     this.httpService.getAllAppointments().subscribe((data) => {

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup,AbstractControl, FormBuilder, Validators, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { HttpService } from '../../services/http.service';
 import { DatePipe } from '@angular/common';
+import { catchError, map, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-receptionist-schedule-appointments',
@@ -21,13 +22,31 @@ export class ReceptionistScheduleAppointmentsComponent implements OnInit {
     this.itemForm = this.formBuilder.group({
       patientId: [this.formModel.patientId,[ Validators.required]],
       doctorId: [this.formModel.doctorId,[ Validators.required]],
-      time: [this.formModel.time,[ Validators.required]],
+      time: [this.formModel.time,[ Validators.required],[this.timeValidator()]],
   });
    }
 
   ngOnInit(): void {
   
   }
+
+  timeValidator(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      console.log("Front END: " + control.value);
+      // Convert the datetime-local string to an ISO 8601 string
+      let isoDateTime = control.value + ":00.000Z";
+      return this.httpService.appointmentTimeExists(isoDateTime).pipe(
+        map(isTaken => {
+          if (isTaken) {
+            return { negativeValue: true };
+          } else {
+            return null;
+          }
+        }),
+        catchError(() => of(null))
+      );
+    };
+  }  
 
   onSubmit()
   {

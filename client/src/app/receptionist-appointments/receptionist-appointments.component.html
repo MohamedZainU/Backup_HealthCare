@@ -11,11 +11,12 @@
                     <label for="time" class="form-label">Appointment Time</label>
                     <input type="hidden" formControlName="id">
                     <input type="datetime-local" name="time" formControlName="time" [(ngModel)]="formModel.time" class="form-control" id="time" placeholder="Appointment Time">
-                    <div *ngIf="itemForm.controls['time'].invalid && (itemForm.controls['time'].dirty || itemForm.controls['time'].touched)" class="ng-dirty">
-                        <span *ngIf="itemForm.controls['time'].errors">
-                            <span class="text-danger">Please Choose Appointment Time.</span>
-                        </span>
-                    </div>
+                    <div *ngIf="itemForm.get('time')?.invalid && !itemForm.get('time')?.hasError('negativeValue')" class="error-message">
+                        <span class="text-danger">Please choose a valid appointment time.</span>
+                      </div>
+                      <div *ngIf="itemForm.get('time')?.hasError('negativeValue')" class="error-message">
+                        <span class="text-danger">Patient Already Booked this Appointment Time!</span>
+                      </div>
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-outline-dark btn-block" type="submit">Submit</button>

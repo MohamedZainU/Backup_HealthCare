@@ -78,7 +78,12 @@ public class AppointmentService {
       public Appointment rescheduleAppointment(Long appointmentId,TimeDto timeDto){
           Appointment appointment = appointmentRepository.findById(appointmentId).orElse(null);
           if(appointment!=null){
-              appointment.setAppointmentTime(timeDto.getTime());
+            Date appointmentTime = timeDto.getTime();
+            Calendar calendar = Calendar.getInstance();
+        calendar.setTime(appointmentTime);
+        calendar.add(Calendar.MINUTE, 30);
+        Date endTime = calendar.getTime();
+              appointment.setAppointmentTime(endTime);
               return appointmentRepository.save(appointment);
           }
           return null;
