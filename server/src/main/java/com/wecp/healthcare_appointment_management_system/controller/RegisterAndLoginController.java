@@ -1,6 +1,7 @@
 package com.wecp.healthcare_appointment_management_system.controller;
 import com.wecp.healthcare_appointment_management_system.dto.LoginRequest;
 import com.wecp.healthcare_appointment_management_system.dto.LoginResponse;
+import com.wecp.healthcare_appointment_management_system.entity.Appointment;
 import com.wecp.healthcare_appointment_management_system.entity.Doctor;
 import com.wecp.healthcare_appointment_management_system.entity.Patient;
 import com.wecp.healthcare_appointment_management_system.entity.Receptionist;
@@ -9,7 +10,15 @@ import com.wecp.healthcare_appointment_management_system.jwt.JwtUtil;
 import com.wecp.healthcare_appointment_management_system.service.UserService;
 
 import com.wecp.healthcare_appointment_management_system.service.UserService;
+
+import java.util.Date;
+import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,8 +31,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.wecp.healthcare_appointment_management_system.repository.*;
 
@@ -81,7 +90,7 @@ public class RegisterAndLoginController {
     }
 
     @DeleteMapping("/api/appointment/delete/{appointmentId}")
-public ResponseEntity<Void> deleteAppointment(@PathVariable Long appointmentId) {
+public ResponseEntity<Boolean> deleteAppointment(@PathVariable Long appointmentId) {
     // Check if the appointment exists before deleting
     
     if (appointmentRepository.existsById(appointmentId)) {
@@ -92,6 +101,22 @@ public ResponseEntity<Void> deleteAppointment(@PathVariable Long appointmentId) 
     }
 }
 
-    
+@GetMapping("/api/user/appointmentTime/{time}")
+public ResponseEntity<Boolean> appointmentTimeExists(@PathVariable String time) {
+    try {
+        // Define the date format
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+
+        // Parse the date-time string
+        Date date = format.parse(time);
+
+        List<Appointment> appointment = appointmentRepository.findByAppointmentTime(date);
+        return ResponseEntity.ok(appointment != null && !appointment.isEmpty());
+    } catch (ParseException e) {
+        // Handle the exception
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+}
 
 }

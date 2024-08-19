@@ -28,7 +28,10 @@ export class ScheduleAppointmentComponent implements OnInit {
 
    timeValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return this.httpService.checkForTime(control.value).pipe(
+      console.log("Front END: " + control.value);
+      // Convert the datetime-local string to an ISO 8601 string
+      let isoDateTime = control.value + ":00.000Z";
+      return this.httpService.appointmentTimeExists(isoDateTime).pipe(
         map(isTaken => {
           if (isTaken) {
             return { negativeValue: true };
@@ -39,7 +42,7 @@ export class ScheduleAppointmentComponent implements OnInit {
         catchError(() => of(null))
       );
     };
-  }
+  }  
 
   ngOnInit(): void {
     this.getPatients();

@@ -70,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/receptionist/appointments").hasAuthority("RECEPTIONIST")
                 .antMatchers(HttpMethod.POST, "/api/receptionist/appointment").hasAuthority("RECEPTIONIST")
                 .antMatchers(HttpMethod.DELETE, "/api/appointment/delete/{appointmentId}").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/user/appointmentTime/{time}").permitAll()
                 .antMatchers(HttpMethod.PUT, "/api/receptionist/appointment-reschedule/{appointmentId}**").hasAuthority("RECEPTIONIST")
 
                 
