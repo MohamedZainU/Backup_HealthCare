@@ -5,13 +5,13 @@
 }
 
 .thead-dark th {
-    background-color: #343a40;
-    color: white;
+    background-color: rgb(48, 134, 134);
+    color: black;
 }
 
 .card-header {
-    background-color: #007bff;
-    color: white;
+    background-color: rgb(48, 134, 134);
+    color: black;
     padding: 15px;
     font-weight: bold;
 }
@@ -27,15 +27,15 @@
 
 #search-button {
     padding: 5px 10px;
-    color: #007bff;
+    color: rgb(48, 134, 134)f;
     background-color: white;
-    border: 1px solid #007bff;
+    border: 1px solid rgb(48, 134, 134);
     border-radius: 0.25rem;
 }
 
 #search-button:hover {
     color: white;
-    background-color: #007bff;
+    background-color: rgb(73, 97, 97);
 }
 
 .pagination {
@@ -43,13 +43,13 @@
 }
 
 .pagination .page-item .page-link {
-    color: #007bff;
+    color: black;
     border: 1px solid #dee2e6;
 }
 
 .pagination .page-item.active .page-link {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: rgb(48, 134, 134);
+    border-color: rgb(48, 134, 134);
     color: white;
 }
 

@@ -24,7 +24,7 @@ padding: 0;
   
   body {
     font-family: 'Roboto', sans-serif;
-    background-image: url("../assets/697207.jpg");
+    background-image: url("../assets/medical.jpg");
    // background-image: url("../assets/medical.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -41,7 +41,7 @@ padding: 0;
     width: 100%;
     height: 60px;
     z-index: 999;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(43, 152 ,152);
   }
    
   .login-container {
@@ -62,7 +62,7 @@ padding: 0;
 
   .username-box {
     display: inline-block;
-    background-color: #007bff; /* Blue background */
+    background-color:rgb(6, 67, 67); /* Blue background */
     color: white; /* White text */
     padding: 2px 5px; /* Padding inside the box */
     border-radius: 5px; /* Optional: rounded corners */

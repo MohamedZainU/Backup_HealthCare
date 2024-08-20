@@ -17,7 +17,7 @@ export class ReceptionistScheduleAppointmentsComponent implements OnInit {
   formModel:any={};
   responseMessage:any;
   isAdded: boolean=false;
-  today!: string;
+  minDate: any;
   constructor(public httpService:HttpService,private formBuilder: FormBuilder,private datePipe: DatePipe) {
     this.itemForm = this.formBuilder.group({
       patientId: [this.formModel.patientId,[ Validators.required]],
@@ -27,7 +27,7 @@ export class ReceptionistScheduleAppointmentsComponent implements OnInit {
    }
 
   ngOnInit(): void {
-  
+    this.setMinDate();
   }
 
   timeValidator(): AsyncValidatorFn {
@@ -64,7 +64,6 @@ export class ReceptionistScheduleAppointmentsComponent implements OnInit {
 
     // Update the form value with the formatted date
     this.itemForm.controls['time'].setValue(formattedTime);
-    debugger;
     this.httpService.ScheduleAppointmentByReceptionist( this.itemForm.value).subscribe((data)=>{
    
       this.itemForm.reset();
@@ -72,6 +71,12 @@ export class ReceptionistScheduleAppointmentsComponent implements OnInit {
       this.isAdded=false;
     })
     
+  }
+
+  setMinDate() {
+    const today = new Date();
+    today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+    this.minDate = today.toISOString().slice(0, 16);
   }
 
 }

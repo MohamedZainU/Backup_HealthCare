@@ -17,6 +17,7 @@ export class ScheduleAppointmentComponent implements OnInit {
   responseMessage:any;
   isAdded: boolean=false;
   today: string;
+  minDate: any;
   constructor(public httpService:HttpService,private formBuilder: FormBuilder,private datePipe: DatePipe) {
     this.today = new Date().toISOString().split('T')[0];
     this.itemForm = this.formBuilder.group({
@@ -46,6 +47,7 @@ export class ScheduleAppointmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPatients();
+    this.setMinDate();
   }
   getPatients() {
     this.doctorList
@@ -80,6 +82,12 @@ export class ScheduleAppointmentComponent implements OnInit {
       this.responseMessage = "Appointment saved successfully.";
       this.isAdded = false;
     });
+  }
+
+  setMinDate() {
+    const today = new Date();
+    today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+    this.minDate = today.toISOString().slice(0, 16);
   }
 
 }

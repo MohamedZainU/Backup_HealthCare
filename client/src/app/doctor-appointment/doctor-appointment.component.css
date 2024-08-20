@@ -1,7 +1,7 @@
 /* General Card Styling */
 .card-header {
-    background-color: #007bff;
-    color: white;
+    background-color: rgb(48, 134, 134);
+    color: black;
     text-align: center;
     padding: 10px 0;
     font-size: 1.5rem;
@@ -24,8 +24,8 @@
 }
 
 .thead-dark th {
-    background-color: #343a40;
-    color: white;
+    background-color:rgb(48, 134, 134);
+    color: black;
 }
 
 /* Status Badge Styling */
@@ -35,7 +35,7 @@
 }
 
 .badge-success {
-    background-color: #007bff;
+    background-color: rgb(48, 134, 134);
 }
 
 .badge-warning {
@@ -77,9 +77,9 @@
 }
 
 .pagination li.active a {
-    background-color: #007bff;
+    background-color: rgb(48, 134, 134);
     color: white;
-    border-color: #007bff;
+    border-color:rgb(48, 134, 134);
 }
 
 .pagination li.disabled a {

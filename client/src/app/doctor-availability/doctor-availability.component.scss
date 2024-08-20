@@ -4,8 +4,8 @@
 }
 
 .card-header {
-    background-color: #343a40 !important;
-    color: #fff !important;
+    background-color: rgb(48, 134, 134);
+    color: black;
     border-radius: 10px 10px 0 0;
 }
 
@@ -15,8 +15,8 @@
 }
 
 .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: rgb(48, 134, 134);
+    border-color:rgb(48, 134, 134);
     padding: 10px 20px;
     border-radius: 5px;
     font-weight: bold;
@@ -24,8 +24,8 @@
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
+    background-color: rgb(52, 86, 86);
+    border-color: rgb(52, 86, 86);
 }
 
 .alert {

@@ -20,6 +20,8 @@ export class ReceptionistAppointmentsComponent implements OnInit {
   isAdded: boolean = false;
   currentPage: number = 1;
   itemsPerPage: number = 5; // Number of items per page
+  minDate: any;
+ 
 
   constructor(public httpService: HttpService, private formBuilder: FormBuilder, private datePipe: DatePipe) {
     this.itemForm = this.formBuilder.group({
@@ -30,6 +32,7 @@ export class ReceptionistAppointmentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAppointments();
+    this.setMinDate();
   }
 
   timeValidator(): AsyncValidatorFn {
@@ -125,5 +128,11 @@ export class ReceptionistAppointmentsComponent implements OnInit {
       this.isAdded = false;
       this.getAppointments();
     });
+  }
+
+  setMinDate() {
+    const today = new Date();
+    today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+    this.minDate = today.toISOString().slice(0, 16);
   }
 }

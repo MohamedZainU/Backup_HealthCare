@@ -1,5 +1,5 @@
 <div *ngIf="isAdded" class="card mx-auto mt-4" style="max-width: 600px;">
-  <div class="card-header text-center bg-primary text-white" style="background-color: #007bff;">
+  <div class="card-header text-center  text-black" style="background-color:rgb(48, 134, 134);;">
     <h4>Add Appointment</h4>
   </div>
   <div class="card-body">
@@ -16,7 +16,7 @@
           class="form-control" 
           id="time" 
           placeholder="Appointment Time"
-          [min]="today">
+          [min]="minDate">
           <div *ngIf="itemForm.get('time')?.invalid && !itemForm.get('time')?.hasError('negativeValue')" class="error-message">
             <span class="text-danger">Please choose a valid appointment time.</span>
           </div>
@@ -26,7 +26,7 @@
     </div>
 
       <div class="text-center">
-        <button class="btn btn-primary" type="submit" style="background-color: #007bff;">Submit</button>
+        <button class="btn btn-primary " type="submit" style="background-color: rgb(48, 134, 134);">Submit</button>
       </div>
     </form>
   </div>
@@ -42,7 +42,7 @@
 </div>
 
 <div class="card mt-4 mx-auto" style="max-width: 800px;">
-  <div class="card-header text-center bg-primary text-black">
+  <div class="card-header text-center text-black">
     <h4>Update Availability</h4>
   </div>
   <div class="card-body">
@@ -64,7 +64,7 @@
           <td>{{val.availability}}</td>
           <td>
             <button *ngIf="val.availability === 'No'" class="btn btn-danger" disabled>Not Available</button>
-            <button *ngIf="val.availability === 'Yes'" type="button" (click)="addAppointment(val)" class="btn btn-primary" style="background-color: #007bff;">
+            <button *ngIf="val.availability === 'Yes'" type="button" (click)="addAppointment(val)" class="btn text-white " style="background-color: rgb(48, 134, 134);">
               Appointment
             </button>
           </td>
