@@ -68,7 +68,11 @@
                       <span class="text-danger" *ngIf="itemForm.get('password')?.errors?.['required']">Please Enter password.</span>
                       
                       <!-- Show "Password must be Valid!" if the password doesn't meet validation criteria -->
-                      <span class="text-danger" *ngIf="itemForm.get('password')?.errors && !itemForm.get('password')?.errors?.['required']">Password must be Valid!</span>
+                      <span class="
+text-danger
+" *ngIf="
+itemForm.get('password')?.errors && !itemForm.get('password')?.errors?.['required']
+">Password must be Valid!<br>Password must contain one Uppercase Alphabet<br>Password must contain one LowerCase Alphabet<br>Password must atleast one special Character <br>Password should contain atleast one number</span>
                   </div>
               </div>              
   
